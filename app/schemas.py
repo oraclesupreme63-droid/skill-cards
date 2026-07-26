@@ -62,3 +62,20 @@ class SkillCardRead(BaseModel):
     is_core: bool
     level: int
     rarity: str
+
+
+class ReferenceCardSkillRead(BaseModel):
+    name: str
+    is_core: bool
+    level: int
+    rarity: str
+
+
+class ReferenceCardRead(BaseModel):
+    id: int
+    name: str
+    photo_url: str
+    description: str
+    overall_rarity: str
+    role: str
+    skills: list[ReferenceCardSkillRead]

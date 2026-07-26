@@ -56,6 +56,24 @@ class ReferenceCard(Base):
     name: Mapped[str]
     photo_url: Mapped[str]
     description: Mapped[str] = mapped_column(Text)
+    overall_rarity: Mapped[str]
+    role: Mapped[str]
+
+    skills: Mapped[list["ReferenceCardSkill"]] = relationship(
+        back_populates="reference_card", cascade="all, delete-orphan"
+    )
+
+
+class ReferenceCardSkill(Base):
+    __tablename__ = "reference_card_skills"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    reference_card_id: Mapped[int] = mapped_column(ForeignKey("reference_cards.id"))
+    name: Mapped[str]
+    is_core: Mapped[bool] = mapped_column(default=False)
+    level: Mapped[int] = mapped_column(default=1)
+
+    reference_card: Mapped["ReferenceCard"] = relationship(back_populates="skills")
 
 
 class Question(Base):

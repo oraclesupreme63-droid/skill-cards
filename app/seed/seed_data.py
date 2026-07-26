@@ -1,9 +1,10 @@
 import asyncio
 
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 
 from app.database import AsyncSessionLocal
-from app.models import Question, ReferenceCard
+from app.models import Question, ReferenceCard, ReferenceCardSkill
 
 CORE_SKILL_NAMES = [
     "Comunicación",
@@ -23,6 +24,16 @@ REFERENCE_CARDS = [
             "Fundador de la agencia Brass Check y dueño de The Painted Porch "
             "Bookshop, su librería física en Bastrop, Texas."
         ),
+        "overall_rarity": "Legendary",
+        "role": "Wisdom Support",
+        "skills": [
+            {"name": "Comunicación", "is_core": True, "level": 98},
+            {"name": "Disciplina/constancia", "is_core": True, "level": 97},
+            {"name": "Resolución de problemas", "is_core": True, "level": 90},
+            {"name": "Regulación emocional", "is_core": True, "level": 99},
+            {"name": "Estoicismo", "is_core": False, "level": 100},
+            {"name": "Escritura", "is_core": False, "level": 99},
+        ],
     },
     {
         "name": "Adrià Solà Pastor",
@@ -35,6 +46,16 @@ REFERENCE_CARDS = [
             "personal a una audiencia de millones de seguidores en YouTube "
             "y redes."
         ),
+        "overall_rarity": "Epic",
+        "role": "Mentor / Buffer",
+        "skills": [
+            {"name": "Comunicación", "is_core": True, "level": 95},
+            {"name": "Disciplina/constancia", "is_core": True, "level": 91},
+            {"name": "Resolución de problemas", "is_core": True, "level": 88},
+            {"name": "Regulación emocional", "is_core": True, "level": 89},
+            {"name": "Oratoria", "is_core": False, "level": 96},
+            {"name": "Marca Personal", "is_core": False, "level": 95},
+        ],
     },
 ]
 
@@ -128,11 +149,28 @@ QUESTIONS = _build_questions()
 async def seed_reference_cards() -> None:
     async with AsyncSessionLocal() as session:
         for card_data in REFERENCE_CARDS:
+            skills_data = card_data["skills"]
             existing = await session.scalar(
-                select(ReferenceCard).where(ReferenceCard.name == card_data["name"])
+                select(ReferenceCard)
+                .options(selectinload(ReferenceCard.skills))
+                .where(ReferenceCard.name == card_data["name"])
             )
             if existing is None:
-                session.add(ReferenceCard(**card_data))
+                card = ReferenceCard(
+                    name=card_data["name"],
+                    photo_url=card_data["photo_url"],
+                    description=card_data["description"],
+                    overall_rarity=card_data["overall_rarity"],
+                    role=card_data["role"],
+                )
+                card.skills = [ReferenceCardSkill(**s) for s in skills_data]
+                session.add(card)
+            else:
+                existing.photo_url = card_data["photo_url"]
+                existing.description = card_data["description"]
+                existing.overall_rarity = card_data["overall_rarity"]
+                existing.role = card_data["role"]
+                existing.skills = [ReferenceCardSkill(**s) for s in skills_data]
         await session.commit()
 
 
