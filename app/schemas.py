@@ -54,3 +54,11 @@ class SkillLevelLogRead(BaseModel):
     recorded_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class SkillCardRead(BaseModel):
+    id: int
+    name: str
+    is_core: bool
+    level: int
+    rarity: str
