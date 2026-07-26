@@ -63,6 +63,8 @@ class Question(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     skill_name: Mapped[str | None] = mapped_column(default=None)
+    min_level: Mapped[int] = mapped_column(default=1)
+    max_level: Mapped[int] = mapped_column(default=100)
     prompt: Mapped[str] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
 
