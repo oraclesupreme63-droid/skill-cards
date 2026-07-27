@@ -15,3 +15,19 @@ export function createSkill(token, name) {
 export function getSkillHistory(token, skillId) {
   return apiFetch(`/skills/${skillId}/history`, { token })
 }
+
+export function getSkillQuestion(token, skillId) {
+  return apiFetch(`/skills/${skillId}/question`, { token })
+}
+
+export function levelUpSkill(token, skillId, { questionId, answerText, selfConfirmed }) {
+  return apiFetch(`/skills/${skillId}/level`, {
+    method: 'PATCH',
+    token,
+    body: JSON.stringify({
+      question_id: questionId,
+      answer_text: answerText,
+      self_confirmed: selfConfirmed,
+    }),
+  })
+}
