@@ -6,7 +6,11 @@ export function SkillCard({ name, level, rarity, is_core }) {
   return (
     <div
       className="skill-card"
-      style={{ background: style.background, color: style.color }}
+      style={{
+        background: style.background,
+        color: style.color,
+        boxShadow: `0 0 24px ${style.glow}, 0 8px 16px rgba(0, 0, 0, 0.35)`,
+      }}
     >
       <span className="skill-card-tag">{is_core ? 'CORE' : 'CUSTOM'}</span>
       <h3>{name}</h3>

@@ -20,9 +20,11 @@ export function ReferenceCardsPage() {
   return (
     <div className="page">
       <h1>Cartas de referencia</h1>
-      {cards.map((card) => (
-        <ReferenceCard key={card.id} {...card} />
-      ))}
+      <div className="cards-stage">
+        {cards.map((card) => (
+          <ReferenceCard key={card.id} {...card} />
+        ))}
+      </div>
     </div>
   )
 }

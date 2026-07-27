@@ -35,19 +35,29 @@
   margin: 8px 0;
 }
 
+.cards-stage {
+  background: radial-gradient(ellipse at top, #241b3d 0%, #0c0a16 65%);
+  border-radius: 16px;
+  padding: 32px 20px;
+  margin: 16px 0;
+}
+
 .cards-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  margin: 16px 0;
+  gap: 20px;
 }
 
 .skill-card {
   width: 160px;
   padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 14px;
   text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-6px) scale(1.04);
 }
 
 .skill-card-tag {
@@ -73,11 +83,43 @@
 }
 
 .reference-card {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  margin: 16px 0;
-  max-width: 700px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid;
+  border-radius: 18px;
+  padding: 24px;
+  margin: 20px 0;
+  max-width: 760px;
+  transition: transform 0.25s ease;
+}
+
+.reference-card:hover {
+  transform: translateY(-4px) scale(1.01);
+}
+
+.reference-card-shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.55) 42%,
+    rgba(255, 255, 255, 0.55) 48%,
+    transparent 65%
+  );
+  background-size: 250% 250%;
+  animation: shine-sweep 4.5s ease-in-out infinite;
+}
+
+@keyframes shine-sweep {
+  0% {
+    background-position: 200% 0%;
+  }
+  60%,
+  100% {
+    background-position: -50% 0%;
+  }
 }
 
 .reference-card-photo {
@@ -85,14 +127,25 @@
   height: 120px;
   object-fit: cover;
   border-radius: 50%;
+  border: 3px solid;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.reference-card h2 {
+  position: relative;
 }
 
 .reference-card-tier {
+  position: relative;
   font-weight: bold;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
 }
 
 .reference-card-description {
-  color: var(--text);
+  position: relative;
+}
+
+.reference-card .cards-grid {
+  position: relative;
 }

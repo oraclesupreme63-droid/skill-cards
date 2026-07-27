@@ -22,10 +22,12 @@ export function CardsPage() {
   return (
     <div className="page">
       <h1>Tus cartas</h1>
-      <div className="cards-grid">
-        {cards.map((card) => (
-          <SkillCard key={card.id} {...card} />
-        ))}
+      <div className="cards-stage">
+        <div className="cards-grid">
+          {cards.map((card) => (
+            <SkillCard key={card.id} {...card} />
+          ))}
+        </div>
       </div>
     </div>
   )
