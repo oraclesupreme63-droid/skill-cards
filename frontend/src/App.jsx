@@ -1,21 +1,30 @@
-import { useState, useEffect } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
+import { ProtectedRoute } from './components/ProtectedRoute'
+import { LoginPage } from './pages/LoginPage'
+import { RegisterPage } from './pages/RegisterPage'
+import { DashboardPage } from './pages/DashboardPage'
 import './App.css'
 
 function App() {
-  const [status, setStatus] = useState('cargando...')
-
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/health`)
-      .then((res) => res.json())
-      .then((data) => setStatus(data.status))
-      .catch(() => setStatus('error'))
-  }, [])
-
   return (
-    <div>
-      <h1>Skill Cards</h1>
-      <p>Backend status: {status}</p>
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 
