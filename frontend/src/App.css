@@ -1,0 +1,69 @@
+.navbar {
+  display: flex;
+  gap: 16px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #ddd;
+  align-items: center;
+}
+
+.cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.skill-card {
+  width: 160px;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+.skill-card-tag {
+  font-size: 11px;
+  font-weight: bold;
+  opacity: 0.75;
+}
+
+.skill-card h3 {
+  margin: 8px 0 4px;
+}
+
+.skill-card-level {
+  font-size: 14px;
+  margin: 0;
+}
+
+.skill-card-rarity {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin: 4px 0 0;
+}
+
+.reference-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 16px 0;
+  max-width: 700px;
+}
+
+.reference-card-photo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.reference-card-tier {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.reference-card-description {
+  color: #444;
+}

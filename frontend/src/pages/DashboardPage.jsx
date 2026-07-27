@@ -9,7 +9,7 @@ import {
 } from '../api/skills'
 
 export function DashboardPage() {
-  const { token, logout } = useAuth()
+  const { token } = useAuth()
 
   const [skills, setSkills] = useState([])
   const [loading, setLoading] = useState(true)
@@ -105,7 +105,6 @@ export function DashboardPage() {
   return (
     <div>
       <h1>Tus skills</h1>
-      <button onClick={logout}>Cerrar sesión</button>
 
       {loadError && <p>{loadError}</p>}
       {levelUpError && <p>{levelUpError}</p>}
