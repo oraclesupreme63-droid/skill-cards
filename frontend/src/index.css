@@ -109,3 +109,63 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.page {
+  text-align: left;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 20px;
+  box-sizing: border-box;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 320px;
+}
+
+input,
+textarea {
+  font: inherit;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  box-sizing: border-box;
+}
+
+textarea {
+  max-width: 100%;
+  min-height: 80px;
+  resize: vertical;
+}
+
+button {
+  font: inherit;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--text-h);
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--accent-border);
+}
+
+.error-message {
+  color: #d32f2f;
+  background: rgba(211, 47, 47, 0.1);
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.loading {
+  padding: 40px 0;
+  color: var(--text);
+}

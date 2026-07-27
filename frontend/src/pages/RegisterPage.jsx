@@ -25,9 +25,9 @@ export function RegisterPage() {
   }
 
   return (
-    <div>
+    <div className="page">
       <h1>Crear cuenta</h1>
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
 
       <form onSubmit={handleSubmit}>
         <input

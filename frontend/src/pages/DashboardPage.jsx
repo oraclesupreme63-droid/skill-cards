@@ -99,22 +99,24 @@ export function DashboardPage() {
   }
 
   if (loading) {
-    return <p>Cargando...</p>
+    return <p className="loading">Cargando...</p>
   }
 
   return (
-    <div>
+    <div className="page">
       <h1>Tus skills</h1>
 
-      {loadError && <p>{loadError}</p>}
-      {levelUpError && <p>{levelUpError}</p>}
+      {loadError && <p className="error-message">{loadError}</p>}
+      {levelUpError && <p className="error-message">{levelUpError}</p>}
 
-      <ul>
+      <ul className="skill-list">
         {skills.map((skill) => (
-          <li key={skill.id}>
-            {skill.name} — nivel {skill.level} ({skill.is_core ? 'core' : 'custom'})
-            <button onClick={() => toggleHistory(skill.id)}>Ver historial</button>
-            <button onClick={() => openLevelUp(skill.id)}>Subir de nivel</button>
+          <li className="skill-row" key={skill.id}>
+            <div>
+              {skill.name} — nivel {skill.level} ({skill.is_core ? 'core' : 'custom'})
+              <button onClick={() => toggleHistory(skill.id)}>Ver historial</button>
+              <button onClick={() => openLevelUp(skill.id)}>Subir de nivel</button>
+            </div>
 
             {historyBySkill[skill.id] && (
               <ul>
@@ -130,7 +132,7 @@ export function DashboardPage() {
             )}
 
             {questionBySkill[skill.id] && (
-              <div>
+              <div className="level-up-panel">
                 <p>{questionBySkill[skill.id].prompt}</p>
                 <textarea
                   value={answerBySkill[skill.id]}
@@ -166,7 +168,7 @@ export function DashboardPage() {
         />
         <button type="submit">Crear</button>
       </form>
-      {createError && <p>{createError}</p>}
+      {createError && <p className="error-message">{createError}</p>}
     </div>
   )
 }

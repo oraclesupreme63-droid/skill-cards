@@ -16,11 +16,11 @@ export function CardsPage() {
       .finally(() => setLoading(false))
   }, [])
 
-  if (loading) return <p>Cargando...</p>
-  if (error) return <p>{error}</p>
+  if (loading) return <p className="loading">Cargando...</p>
+  if (error) return <p className="error-message">{error}</p>
 
   return (
-    <div>
+    <div className="page">
       <h1>Tus cartas</h1>
       <div className="cards-grid">
         {cards.map((card) => (
