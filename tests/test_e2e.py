@@ -3,13 +3,13 @@ from tests.conftest import TestSessionLocal
 
 
 async def test_full_flow_register_to_cards(client):
-    # 1. Registro: crea el usuario y sus 4 skills core
+    # 1. Register: creates the user and their 4 core skills
     register = await client.post(
         "/auth/register", json={"email": "e2e@test.com", "password": "12345678"}
     )
     assert register.status_code == 201
 
-    # 2. Login: autenticación
+    # 2. Login: authentication
     login = await client.post(
         "/auth/login", data={"username": "e2e@test.com", "password": "12345678"}
     )
@@ -17,12 +17,12 @@ async def test_full_flow_register_to_cards(client):
     token = login.json()["access_token"]
     headers = {"Authorization": f"Bearer {token}"}
 
-    # 3. Las 4 skills core ya existen en nivel 1
+    # 3. The 4 core skills already exist at level 1
     skills = (await client.get("/skills", headers=headers)).json()
     assert len(skills) == 4
     assert all(s["level"] == 1 for s in skills)
 
-    # 4. Crear 2 skills custom, la 3ra falla
+    # 4. Create 2 custom skills, the 3rd one fails
     assert (
         await client.post("/skills", json={"name": "Programación"}, headers=headers)
     ).status_code == 201
@@ -36,7 +36,7 @@ async def test_full_flow_register_to_cards(client):
     skills = (await client.get("/skills", headers=headers)).json()
     assert len(skills) == 6
 
-    # 5. Subir de nivel una skill core: pedir la pregunta, responder, confirmar
+    # 5. Level up a core skill: fetch the question, answer, confirm
     async with TestSessionLocal() as session:
         session.add(
             Question(
@@ -71,12 +71,12 @@ async def test_full_flow_register_to_cards(client):
     assert len(history) == 1
     assert history[0]["level"] == 2
 
-    # 6. /cards: la rareza se calcula, todas siguen en bronce (niveles 1-2)
+    # 6. /cards: rarity is calculated, all still "bronce" (levels 1-2)
     cards = (await client.get("/cards", headers=headers)).json()
     assert len(cards) == 6
     assert all(c["rarity"] == "bronce" for c in cards)
 
-    # 7. /reference-cards: público, sin autenticación
+    # 7. /reference-cards: public, no authentication needed
     async with TestSessionLocal() as session:
         card = ReferenceCard(
             name="Ryan Holiday",
@@ -93,5 +93,5 @@ async def test_full_flow_register_to_cards(client):
     assert len(reference_cards) == 1
     assert reference_cards[0]["skills"][0]["rarity"] == "dios"
 
-    # 8. Sin token, /skills sigue protegido
+    # 8. Without a token, /skills stays protected
     assert (await client.get("/skills")).status_code == 401

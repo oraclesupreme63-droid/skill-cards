@@ -1,22 +1,22 @@
 # Skill Cards
 
-Backend de un sistema de cartas estilo FIFA para medir habilidades reales (sobre todo sociales). Cada habilidad ("skill") tiene un nivel que subís vos mismo, validado con un sistema de auto-evaluación honesta, y una rareza calculada automáticamente a partir de ese nivel — nunca se guarda en la base.
+Backend for a FIFA-style card system that measures real-life skills (mostly social ones). Each skill has a level you raise yourself, validated through an honest self-assessment system, and a rarity calculated automatically from that level — it's never stored in the database.
 
-Proyecto de portafolio/aprendizaje backend, sin frontend: [Swagger](#uso) (`/docs`) es la interfaz de prueba.
+A personal backend portfolio/learning project, no frontend: [Swagger](#usage) (`/docs`) is the testing interface.
 
 ## Stack
 
 - Python 3.12 + FastAPI
 - PostgreSQL + SQLAlchemy 2.0 (async)
-- Alembic (migraciones)
+- Alembic (migrations)
 - JWT (python-jose) + bcrypt (passlib)
 - Pydantic v2
 - Docker + docker-compose
-- Pytest + httpx + pytest-asyncio (SQLite en memoria para tests)
+- Pytest + httpx + pytest-asyncio (in-memory SQLite for tests)
 
-## Cómo levantarlo
+## Getting started
 
-Requisitos: Docker Desktop instalado y corriendo.
+Requirements: Docker Desktop installed and running.
 
 ```bash
 git clone https://github.com/oraclesupreme63-droid/skill-cards.git
@@ -24,33 +24,33 @@ cd skill-cards
 docker compose up -d --build
 ```
 
-Primera vez: correr las migraciones y el seeding inicial (4 skills core, 25 preguntas del sistema de validación, 2 reference cards).
+First run: apply migrations and seed the initial data (4 core skills, 25 questions for the level-up validation system, 2 reference cards).
 
 ```bash
 docker compose exec api alembic upgrade head
 docker compose exec api python -m app.seed.seed_data
 ```
 
-La API queda en `http://localhost:8000`, la documentación interactiva en `http://localhost:8000/docs`.
+The API is available at `http://localhost:8000`, interactive docs at `http://localhost:8000/docs`.
 
-## Uso
+## Usage
 
-1. `POST /auth/register` — creá un usuario (email + password). Se te crean automáticamente 4 skills core en nivel 1.
-2. En `/docs`, click en **Authorize** (candado arriba de la página) con el mismo email/password — esto autentica todas las peticiones siguientes. (Ojo: probar `/auth/login` con "Try it out" *no* hace lo mismo, solo te devuelve el token en la respuesta.)
-3. `GET /skills` — ver tus skills.
-4. `POST /skills` — crear una skill personalizada (máximo 2 por usuario).
-5. `GET /skills/{id}/question` — traer la pregunta/situación para subir al siguiente nivel de esa skill.
-6. `PATCH /skills/{id}/level` — respondé la pregunta y confirmá si la aprobaste (`self_confirmed`). Si es `true`, el nivel sube.
-7. `GET /skills/{id}/history` — ver el historial de subidas de esa skill.
-8. `GET /cards` — tus skills con la rareza ya calculada, listas para pintar como cartas.
-9. `GET /reference-cards` — cartas de referencia (Ryan Holiday, Adrià Solà Pastor), de solo lectura y sin necesidad de estar autenticado.
+1. `POST /auth/register` — create a user (email + password). You automatically get 4 core skills at level 1.
+2. In `/docs`, click **Authorize** (the padlock at the top of the page) with the same email/password — this authenticates every following request. (Note: testing `/auth/login` with "Try it out" does *not* do the same thing, it only returns the token in the response.)
+3. `GET /skills` — list your skills.
+4. `POST /skills` — create a custom skill (maximum 2 per user).
+5. `GET /skills/{id}/question` — fetch the question/scenario needed to level up that skill.
+6. `PATCH /skills/{id}/level` — answer the question and confirm whether you passed it (`self_confirmed`). If `true`, the level goes up.
+7. `GET /skills/{id}/history` — view that skill's level-up history.
+8. `GET /cards` — your skills with rarity already calculated, ready to be rendered as cards.
+9. `GET /reference-cards` — reference cards (Ryan Holiday, Adrià Solà Pastor), read-only and public (no authentication required).
 
-## Reglas de negocio
+## Business rules
 
-- Al registrarse, se crean automáticamente 4 skills core: Comunicación, Disciplina/constancia, Resolución de problemas, Regulación emocional.
-- Máximo 2 skills personalizadas (custom) por usuario — la tercera devuelve `400`.
-- La rareza se calcula siempre a partir del nivel, nunca se persiste: 1-20 bronce, 21-40 plata, 41-60 oro, 61-80 platino, 81-100 dios.
-- Subir de nivel requiere responder una pregunta/situación y auto-confirmar si la aprobaste — no es un simple contador que subís vos sin más. Cada intento (apruebe o no) queda registrado.
+- On registration, 4 core skills are created automatically: Comunicación, Disciplina/constancia, Resolución de problemas, Regulación emocional.
+- Maximum 2 custom skills per user — the third one returns `400`.
+- Rarity is always calculated from the level, never persisted: 1-20 bronce, 21-40 plata, 41-60 oro, 61-80 platino, 81-100 dios.
+- Leveling up requires answering a question/scenario and self-confirming whether you passed it — it's not a plain counter you bump yourself. Every attempt (passed or not) is recorded.
 
 ## Tests
 
@@ -58,31 +58,31 @@ La API queda en `http://localhost:8000`, la documentación interactiva en `http:
 docker compose exec api pytest -v
 ```
 
-Corren contra una base SQLite en memoria, independiente de la base real — no hace falta tener Postgres arriba para ejecutarlos (sí hace falta que el contenedor `api` esté corriendo, porque ahí están instaladas las dependencias).
+Tests run against an in-memory SQLite database, independent from the real one — you don't need Postgres running to execute them (you do need the `api` container running, since that's where the dependencies are installed).
 
-## Estructura del proyecto
+## Project structure
 
 ```text
 app/
 ├── main.py              # FastAPI app, routers, /health, /static
-├── database.py          # engine async, sessionmaker, Base
-├── models.py            # modelos SQLAlchemy
-├── schemas.py           # schemas Pydantic
+├── database.py           # async engine, sessionmaker, Base
+├── models.py             # SQLAlchemy models
+├── schemas.py             # Pydantic schemas
 ├── core/
-│   ├── config.py        # settings (variables de entorno)
-│   ├── security.py      # hashing, JWT
-│   └── rarity.py        # cálculo de rareza
+│   ├── config.py         # settings (environment variables)
+│   ├── security.py        # hashing, JWT
+│   └── rarity.py          # rarity calculation
 ├── auth/
-│   ├── router.py         # /auth/register, /auth/login
-│   └── dependencies.py   # get_current_user
+│   ├── router.py          # /auth/register, /auth/login
+│   └── dependencies.py    # get_current_user
 ├── routers/
-│   ├── skills.py          # /skills
-│   ├── cards.py           # /cards
-│   └── reference_cards.py # /reference-cards
+│   ├── skills.py           # /skills
+│   ├── cards.py             # /cards
+│   └── reference_cards.py   # /reference-cards
 ├── seed/
-│   └── seed_data.py       # skills core, preguntas, reference cards
-└── static/                # fotos de las reference cards
+│   └── seed_data.py         # core skills, questions, reference cards
+└── static/                  # reference card photos
 
-alembic/                  # migraciones
-tests/                    # tests con pytest
+alembic/                  # migrations
+tests/                    # pytest test suite
 ```

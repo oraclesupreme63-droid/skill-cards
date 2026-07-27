@@ -59,7 +59,7 @@ REFERENCE_CARDS = [
     },
 ]
 
-# Mismos tramos que la rareza: bronce, plata, oro, platino, dios.
+# Same tiers as rarity: bronce, plata, oro, platino, dios.
 LEVEL_BANDS = [(1, 20), (21, 40), (41, 60), (61, 80), (81, 100)]
 
 QUESTION_PROMPTS = {
