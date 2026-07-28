@@ -112,10 +112,16 @@ export function DashboardPage() {
       <ul className="skill-list">
         {skills.map((skill) => (
           <li className="skill-row" key={skill.id}>
-            <div>
-              {skill.name} — nivel {skill.level} ({skill.is_core ? 'core' : 'custom'})
-              <button onClick={() => toggleHistory(skill.id)}>Ver historial</button>
-              <button onClick={() => openLevelUp(skill.id)}>Subir de nivel</button>
+            <div className="skill-row-main">
+              <span className="skill-row-name">
+                {skill.name} — nivel {skill.level} ({skill.is_core ? 'core' : 'custom'})
+              </span>
+              <div className="skill-row-actions">
+                <button className="btn-ghost" onClick={() => toggleHistory(skill.id)}>
+                  Ver historial
+                </button>
+                <button onClick={() => openLevelUp(skill.id)}>Subir de nivel</button>
+              </div>
             </div>
 
             {historyBySkill[skill.id] && (
@@ -144,14 +150,16 @@ export function DashboardPage() {
                   }
                   placeholder="Contá tu situación..."
                 />
-                <div>
+                <div className="level-up-panel-actions">
                   <button onClick={() => submitLevelUp(skill.id, true)}>
                     Sí, lo logré
                   </button>
-                  <button onClick={() => submitLevelUp(skill.id, false)}>
+                  <button className="btn-ghost" onClick={() => submitLevelUp(skill.id, false)}>
                     Todavía no
                   </button>
-                  <button onClick={() => closeLevelUp(skill.id)}>Cancelar</button>
+                  <button className="btn-ghost" onClick={() => closeLevelUp(skill.id)}>
+                    Cancelar
+                  </button>
                 </div>
               </div>
             )}

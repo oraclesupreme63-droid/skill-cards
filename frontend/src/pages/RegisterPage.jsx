@@ -25,29 +25,31 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="page">
-      <h1>Crear cuenta</h1>
-      {error && <p className="error-message">{error}</p>}
+    <div className="auth-page">
+      <div className="auth-card">
+        <h1>Crear cuenta</h1>
+        {error && <p className="error-message">{error}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Crear cuenta</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">Crear cuenta</button>
+        </form>
 
-      <p>
-        ¿Ya tenés cuenta? <Link to="/login">Iniciar sesión</Link>
-      </p>
+        <p className="auth-card-footer">
+          ¿Ya tenés cuenta? <Link to="/login">Iniciar sesión</Link>
+        </p>
+      </div>
     </div>
   )
 }

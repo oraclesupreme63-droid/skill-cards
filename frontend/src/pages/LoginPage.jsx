@@ -28,29 +28,31 @@ export function LoginPage() {
   }
 
   return (
-    <div className="page">
-      <h1>Iniciar sesión</h1>
-      {error && <p className="error-message">{error}</p>}
+    <div className="auth-page">
+      <div className="auth-card">
+        <h1>Iniciar sesión</h1>
+        {error && <p className="error-message">{error}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Iniciar sesión</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">Iniciar sesión</button>
+        </form>
 
-      <p>
-        ¿No tenés cuenta? <Link to="/register">Crear cuenta</Link>
-      </p>
+        <p className="auth-card-footer">
+          ¿No tenés cuenta? <Link to="/register">Crear cuenta</Link>
+        </p>
+      </div>
     </div>
   )
 }

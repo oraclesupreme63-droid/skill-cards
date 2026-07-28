@@ -1,38 +1,95 @@
 .navbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--border);
   align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(23, 19, 42, 0.6);
+  backdrop-filter: blur(6px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 20px;
+  text-decoration: none;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  white-space: nowrap;
+}
+
+.navbar-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.navbar-links a:hover {
+  color: var(--text-h);
 }
 
 .skill-list {
   list-style: none;
   padding: 0;
   margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .skill-row {
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 12px 16px;
-  margin-bottom: 10px;
+  border-radius: 12px;
+  padding: 14px 18px;
+  background: var(--bg-elevated);
 }
 
-.skill-row button {
-  margin-left: 8px;
+.skill-row-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.skill-row-name {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.skill-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .level-up-panel {
-  margin-top: 12px;
-  padding-top: 12px;
+  margin-top: 14px;
+  padding-top: 14px;
   border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.level-up-panel textarea {
-  width: 100%;
-  margin: 8px 0;
+.level-up-panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .cards-stage {
@@ -49,11 +106,16 @@
 }
 
 .skill-card {
-  width: 160px;
+  flex: 1 1 160px;
+  max-width: 180px;
+  min-width: 0;
   padding: 16px;
   border-radius: 14px;
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .skill-card:hover {
@@ -67,19 +129,19 @@
 }
 
 .skill-card h3 {
-  margin: 8px 0 4px;
+  margin: 4px 0;
+  font-size: 17px;
+  overflow-wrap: anywhere;
 }
 
 .skill-card-level {
   font-size: 14px;
-  margin: 0;
 }
 
 .skill-card-rarity {
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 1px;
-  margin: 4px 0 0;
 }
 
 .reference-card {
@@ -133,6 +195,7 @@
 
 .reference-card h2 {
   position: relative;
+  overflow-wrap: anywhere;
 }
 
 .reference-card-tier {
@@ -148,4 +211,31 @@
 
 .reference-card .cards-grid {
   position: relative;
+}
+
+.auth-page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+}
+
+.auth-card form {
+  max-width: 100%;
+}
+
+.auth-card-footer {
+  margin-top: 16px;
+  color: var(--text);
 }
